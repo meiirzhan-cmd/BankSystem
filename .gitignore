@@ -1,8 +1,5 @@
 # Maven build output
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
 # Maven log files
 .flattened-pom.xml
@@ -29,14 +26,10 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-# VS Code — keep settings.json, ignore the rest
+# VS Code — only commit shared project settings
 .vscode/*
 !.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
 !.vscode/extensions.json
 
 # OS
