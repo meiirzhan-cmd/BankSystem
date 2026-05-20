@@ -19,9 +19,10 @@
     <name>Bank Service — Parent POM</name>
 
     <modules>
-        <module>discovery-service</module>
-        <!-- Uncomment as we build each one:
         <module>shared-lib</module>
+        <module>discovery-service</module>
+
+        <!-- Uncomment as we build each one:
         <module>gateway</module>
         <module>account-service</module>
         -->
