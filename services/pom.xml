@@ -22,9 +22,7 @@
         <module>shared-lib</module>
         <module>discovery-service</module>
         <module>gateway</module>
-        <!-- Uncomment as we build each one:
         <module>account-service</module>
-        -->
     </modules>
 
     <properties>
