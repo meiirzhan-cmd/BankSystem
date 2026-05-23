@@ -1,0 +1,98 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: account-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bank_accounts
+    username: bank
+    password: bank_secret
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+    # Kafka 
+  kafka:
+    bootstrap-servers: localhost:9094
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: account-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.banking.*
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: bank_redis
+
+# JWT (commented until Keycloak is up) ──
+  # security:
+  #   oauth2:
+  #     resourceserver:
+  #       jwt:
+  #         issuer-uri: http://localhost:8080/realms/bank
+
+# Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+logging:
+  level:
+    com.banking.account: DEBUG
+
+---
+# ── Docker profile ──
+spring:
+  config:
+    activate:
+      on-profile: docker
+  datasource:
+    url: jdbc:postgresql://postgres:5432/bank_accounts
+  kafka:
+    bootstrap-servers: kafka:9092
+  data:
+    redis:
+      host: redis
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/bank
+          jwk-set-uri: http://keycloak:8080/realms/bank/protocol/openid-connect/certs
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery:8761/eureka/
