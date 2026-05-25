@@ -73,17 +73,3 @@ Then open http://localhost:8761 to see the Eureka dashboard.
 
 Other services need Postgres / Redis / Kafka, which we'll wire up via Docker
 Compose in the next phase.
-
-## Learning principles followed here
-
-1. **Naive first, refactor later.** Each shortcut is documented in the table
-   above so we can come back and replace it deliberately.
-2. **Real version numbers.** No "let me pick what feels stable" — every
-   dependency is pinned to the latest stable release as of the build date.
-3. **Small commits, real messages.** Each commit explains *why*, not *what*
-   (the diff already shows what).
-4. **Question every dependency.** If we add it, we should be able to say what
-   problem it solves. If we can't, it goes.
-
-This README is itself part of that discipline — it's the contract for what
-"done" eventually looks like, and a reminder not to ship the starter version.
